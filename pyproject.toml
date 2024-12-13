@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "media-moment-iz-third"
+version = "0.1.0"
+description = ""
+authors = ["korsNaike <kirillgrinev2003@mail.ru>", "AlexeyVorobyev <>", "shimern <>", "ARTEZON <>"]
+readme = "README.md"
+package-mode=false
+
+[tool.poetry.dependencies]
+python = "^3.13"
+opencv-python = "^4.10.0.84"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
