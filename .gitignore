@@ -1,3 +1,6 @@
 venv
 .venv
 .idea
+datasets
+runs
+*.pt
