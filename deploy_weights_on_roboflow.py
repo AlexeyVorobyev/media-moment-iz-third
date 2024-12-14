@@ -12,4 +12,4 @@ rf = roboflow.Roboflow(api_key=API_KEY)
 project = rf.workspace().project(PROJECT_ID)
 
 version = project.version(DATASET_VERSION)
-version.deploy("yolov8", "runs/detect/train/train3", "weights/best.pt")
+version.deploy("yolov8", "runs/detect/train/train11", "weights/best.pt")
