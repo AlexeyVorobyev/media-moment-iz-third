@@ -4,4 +4,3 @@ venv
 datasets
 runs
 .env
-*.pt
