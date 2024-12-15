@@ -65,12 +65,15 @@ class QwenStacking:
             self,
             img: Image,
             yolo_results: list[CropResultWithPrompt],
-            prompt_factory_list: list[Callable[[str], list[dict]]]
+            prompt_factory_list: list[Callable[[str], list[dict]]],
+            main_preprocessing_list: list[Callable[[Image], Image]]
     ) -> str:
         """
         Найти номер поезда по результатам обработки из стекинга йолы
         :param img: Фото
         :param yolo_results: Список результатов
+        :param prompt_factory_list:  Список функций для созданий промптом
+        :param main_preprocessing_list: Список функций предобработчиков фото
         :return:
         """
         logger.debug("Начата обработка с LLM...")
@@ -79,10 +82,12 @@ class QwenStacking:
             cropped = self._cropping_func(img, yolo_result.xyxy)
 
             for prompt_factory in prompt_factory_list:
-                for model in self._models:
-                    predict_result = model.predict(cropped, prompt_factory)
-                    logger.debug(f"Результат предсказания для {yolo_result}, prompt_factory - {prompt_factory.__name__}, model - {model.__class__.__name__}: {predict_result}")
-                    first_results.append(predict_result)
+                for preprocessing in main_preprocessing_list:
+                    for model in self._models:
+                        preprocessed_cropped = preprocessing(cropped)
+                        predict_result = model.predict(preprocessed_cropped, prompt_factory)
+                        logger.debug(f"Результат предсказания для {yolo_result}, prompt_factory - {prompt_factory.__name__}, preprocessing - {preprocessing.__name__}, model - {model.__class__.__name__}: {predict_result}")
+                        first_results.append(predict_result)
 
         return self.filter_results(first_results)
 

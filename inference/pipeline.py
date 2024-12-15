@@ -4,6 +4,7 @@ from PIL import Image, ImageOps, ImageEnhance
 
 from QwenStacking import QwenStacking
 from YoloStacking import YoloStacking
+from preprocessing import *
 from qwen_model.Qwen7VLModel import Qwen7VLModel
 from qwen_model.Qwen2VLModel import Qwen2VLModel
 
@@ -139,6 +140,14 @@ prompt_factory_list = [
     easy_3_prompt,
 ]
 
+main_preprocessing_list = [
+    default_preprocess,
+    enhance_contrast_and_sharp_pillow,
+    adaptive_thresholding,
+    enhance_sharpness_cv2,
+    gray_contrast
+]
+
 yolo_stacking = YoloStacking(
     [
         {
@@ -186,7 +195,7 @@ def pipeline(img_path: str) -> str:
     '''
     Шаг 5. Отправка запроса с обрезанным изображением мультимодальной языковой модели и получение ответа
     '''
-    result = qwen_stacking.predict_by_yolo_results(img, yolo_results, prompt_factory_list)
+    result = qwen_stacking.predict_by_yolo_results(img, yolo_results, prompt_factory_list, main_preprocessing_list)
 
     '''
     Шаг 6. Возврат полученной результирующей строки
