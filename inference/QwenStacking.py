@@ -55,10 +55,10 @@ def find_most_frequent_string(strings) -> str:
 class QwenStacking:
     def __init__(
             self,
-            model: BaseQwenModel,
+            models: list[BaseQwenModel],
             cropping_func: Optional[Callable[[Image, tuple[float, float, float, float]], Image]] = None
     ) -> None:
-        self._model = model
+        self._models = models
         self._cropping_func = default_crop if cropping_func is None else cropping_func
 
     def predict_by_yolo_results(
@@ -79,9 +79,10 @@ class QwenStacking:
             cropped = self._cropping_func(img, yolo_result.xyxy)
 
             for prompt_factory in prompt_factory_list:
-                predict_result = self._model.predict(cropped, prompt_factory)
-                logger.debug(f"Результат предсказания для {yolo_result}, prompt_factory - {prompt_factory.__name__}: {predict_result}")
-                first_results.append(predict_result)
+                for model in self._models:
+                    predict_result = model.predict(cropped, prompt_factory)
+                    logger.debug(f"Результат предсказания для {yolo_result}, prompt_factory - {prompt_factory.__name__}, model - {model.__class__.__name__}: {predict_result}")
+                    first_results.append(predict_result)
 
         return self.filter_results(first_results)
 

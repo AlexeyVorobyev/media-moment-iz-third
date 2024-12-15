@@ -29,6 +29,7 @@ def gray_and_contrast_preprocess_func(image: Image.Image):
     enhanced_image = enhancer.enhance(2.0)
     return enhanced_image
 
+
 def default_prompt(image):
     messages = [
         {
@@ -47,6 +48,7 @@ def default_prompt(image):
         }
     ]
     return messages
+
 
 def default_2_prompt(image):
     messages = [
@@ -67,6 +69,7 @@ def default_2_prompt(image):
     ]
     return messages
 
+
 def easy_prompt(image):
     messages = [
         {
@@ -86,10 +89,53 @@ def easy_prompt(image):
     ]
     return messages
 
+
+def easy_2_prompt(image):
+    messages = [
+        {
+            "role": "system",
+            "content": [
+                {"type": "text",
+                 "text": "Extract the 8 digits number RAW, also it can be distributed and have some spaces."},
+            ],
+        },
+        {
+            "role": "user",
+            "content": [
+                {"type": "image", "image": f'file://{os.path.abspath(image)}'},
+                {"type": "text", "text": "Extract the 8 digits number RAW:"},
+            ],
+        }
+    ]
+    return messages
+
+def easy_3_prompt(image):
+    messages = [
+        {
+            "role": "system",
+            "content": [
+                {"type": "text",
+                 "text": "Just extract 8-digit sparsed number IT willbe located on wall of carriage and can have large spaces between."},
+            ],
+        },
+        {
+            "role": "user",
+            "content": [
+                {"type": "image", "image": f'file://{os.path.abspath(image)}'},
+                {"type": "text", "text": "Just extract 8-digit sparsed number IT willbe located on wall of carriage and can have large spaces between from this photo please dude:"},
+            ],
+        }
+    ]
+    return messages
+
+
+
 prompt_factory_list = [
     default_prompt,
     default_2_prompt,
-    easy_prompt
+    easy_prompt,
+    easy_2_prompt,
+    easy_3_prompt,
 ]
 
 yolo_stacking = YoloStacking(
@@ -105,9 +151,9 @@ yolo_stacking = YoloStacking(
     ],
 )
 
-qwen_stacking = QwenStacking(
-    Qwen2VLModel()
-)
+qwen_stacking = QwenStacking([
+    Qwen2VLModel(),
+])
 
 
 def pipeline(img_path: str) -> str:
