@@ -2,6 +2,8 @@ from PIL import Image, ImageOps
 from ultralytics import YOLO
 import numpy as np
 
+from inference_qwen import inference
+
 
 YOLO_CROP_WEIGHTS_PATH = 'yolo_crop_model.pt'
 SHOW_PADDED_IMAGE = False
@@ -48,9 +50,8 @@ def pipeline(img_path: str) -> str:
     '''
     Шаг 5. Отправка запроса с обрезанным изображением мультимодальной языковой модели и получение ответа
     '''
-    result = ''  # Заглушка
-    # TODO: ДОБАВИТЬ РАБОТУ С LLM
-    # Сначала проверить предобученную модель. Может, дообучать и не придётся.
+    result = inference(img_crop)
+    result = ''.join(char for char in result if char.isdigit())
 
     '''
     Шаг 6. Возврат полученной результирующей строки
@@ -59,4 +60,5 @@ def pipeline(img_path: str) -> str:
 
 
 if __name__ == '__main__':
-    print(pipeline(input('Перетащите файл с изображением сюда: ')))
+    while True:
+        print(pipeline(input('Перетащите файл с изображением сюда: ')))

@@ -1,0 +1,92 @@
+{
+  "test_name": "YOLOv11_with_PaliGemma2-3b-pt-224_float32_only-numeric",
+  "test_folder": "C:/Users/ARTEZON/Desktop/Универ/Алгоритмы цифровой обработки мультимедиа/ИЗ 3/media-moment-iz-third/inference/test",
+  "elapsed_seconds": 145.932,
+  "stats": {
+    "total": 55,
+    "equal": {
+      "count": 43,
+      "percent": 78.2
+    },
+    "partial": {
+      "count": 5,
+      "percent": 9.1
+    },
+    "wrong": {
+      "count": 6,
+      "percent": 10.9
+    },
+    "none": {
+      "count": 1,
+      "percent": 1.8
+    }
+  },
+  "failed_lists": {
+    "partial_images": [
+      {
+        "img": "test/53212484.jpg",
+        "ground_truth": "53212484",
+        "model_answer": "53212486"
+      },
+      {
+        "img": "test/54906730.jpg",
+        "ground_truth": "54906730",
+        "model_answer": "54908730"
+      },
+      {
+        "img": "test/55803324.jpg",
+        "ground_truth": "55803324",
+        "model_answer": "55805324"
+      },
+      {
+        "img": "test/68080947.jpg",
+        "ground_truth": "68080947",
+        "model_answer": "68050947"
+      },
+      {
+        "img": "test/94290822.jpg",
+        "ground_truth": "94290822",
+        "model_answer": "94290022"
+      }
+    ],
+    "wrong_images": [
+      {
+        "img": "test/52088507.jpg",
+        "ground_truth": "52088507",
+        "model_answer": "5708"
+      },
+      {
+        "img": "test/52276631.jpg",
+        "ground_truth": "52276631",
+        "model_answer": "5227863"
+      },
+      {
+        "img": "test/55741110.jpg",
+        "ground_truth": "55741110",
+        "model_answer": "5574110"
+      },
+      {
+        "img": "test/57022246.jpg",
+        "ground_truth": "57022246",
+        "model_answer": "5702224620"
+      },
+      {
+        "img": "test/70711551.jpg",
+        "ground_truth": "70711551",
+        "model_answer": "7071155120"
+      },
+      {
+        "img": "test/95911681.jpg",
+        "ground_truth": "95911681",
+        "model_answer": "959116"
+      }
+    ],
+    "not_recognized_images": [
+      {
+        "img": "test/53386785.jpg",
+        "ground_truth": "53386785",
+        "model_answer": ""
+      }
+    ]
+  }
+}

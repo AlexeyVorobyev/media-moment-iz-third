@@ -1,0 +1,82 @@
+{
+  "test_name": "YOLOv11_with_Qwen2-VL-2B-Instruct",
+  "test_folder": "C:/Users/ARTEZON/Desktop/Универ/Алгоритмы цифровой обработки мультимедиа/ИЗ 3/media-moment-iz-third/inference/test",
+  "elapsed_seconds": 19.994,
+  "stats": {
+    "total": 55,
+    "equal": {
+      "count": 45,
+      "percent": 81.8
+    },
+    "partial": {
+      "count": 3,
+      "percent": 5.5
+    },
+    "wrong": {
+      "count": 6,
+      "percent": 10.9
+    },
+    "none": {
+      "count": 1,
+      "percent": 1.8
+    }
+  },
+  "failed_lists": {
+    "partial_images": [
+      {
+        "img": "test/52276631.jpg",
+        "ground_truth": "52276631",
+        "model_answer": "52276831"
+      },
+      {
+        "img": "test/68080947.jpg",
+        "ground_truth": "68080947",
+        "model_answer": "68050947"
+      },
+      {
+        "img": "test/76807288.jpg",
+        "ground_truth": "76807288",
+        "model_answer": "76870289"
+      }
+    ],
+    "wrong_images": [
+      {
+        "img": "test/52088507.jpg",
+        "ground_truth": "52088507",
+        "model_answer": "8"
+      },
+      {
+        "img": "test/52132834.jpg",
+        "ground_truth": "52132834",
+        "model_answer": "5213"
+      },
+      {
+        "img": "test/53212484.jpg",
+        "ground_truth": "53212484",
+        "model_answer": "5321"
+      },
+      {
+        "img": "test/70711551.jpg",
+        "ground_truth": "70711551",
+        "model_answer": "7071551"
+      },
+      {
+        "img": "test/95273926.jpg",
+        "ground_truth": "95273926",
+        "model_answer": "8527392"
+      },
+      {
+        "img": "test/95911681.jpg",
+        "ground_truth": "95911681",
+        "model_answer": "959116"
+      }
+    ],
+    "not_recognized_images": [
+      {
+        "img": "test/53386785.jpg",
+        "ground_truth": "53386785",
+        "model_answer": ""
+      }
+    ]
+  }
+}
