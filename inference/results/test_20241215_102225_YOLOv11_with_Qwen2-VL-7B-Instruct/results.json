@@ -1,0 +1,67 @@
+{
+  "test_name": "YOLOv11_with_Qwen2-VL-7B-Instruct",
+  "test_folder": "X:/Studying/media-moment-iz-third/inference/test",
+  "elapsed_seconds": 226.956,
+  "stats": {
+    "total": 55,
+    "equal": {
+      "count": 48,
+      "percent": 87.3
+    },
+    "partial": {
+      "count": 3,
+      "percent": 5.5
+    },
+    "wrong": {
+      "count": 1,
+      "percent": 1.8
+    },
+    "none": {
+      "count": 3,
+      "percent": 5.5
+    }
+  },
+  "failed_lists": {
+    "partial_images": [
+      {
+        "img": "test/52276631.jpg",
+        "ground_truth": "52276631",
+        "model_answer": "52276831"
+      },
+      {
+        "img": "test/53212484.jpg",
+        "ground_truth": "53212484",
+        "model_answer": "53212486"
+      },
+      {
+        "img": "test/68080947.jpg",
+        "ground_truth": "68080947",
+        "model_answer": "68050947"
+      }
+    ],
+    "wrong_images": [
+      {
+        "img": "test/53386785.jpg",
+        "ground_truth": "53386785",
+        "model_answer": "10000070"
+      }
+    ],
+    "not_recognized_images": [
+      {
+        "img": "test/52088507.jpg",
+        "ground_truth": "52088507",
+        "model_answer": ""
+      },
+      {
+        "img": "test/54663471.jpg",
+        "ground_truth": "54663471",
+        "model_answer": ""
+      },
+      {
+        "img": "test/95911681.jpg",
+        "ground_truth": "95911681",
+        "model_answer": ""
+      }
+    ]
+  }
+}
