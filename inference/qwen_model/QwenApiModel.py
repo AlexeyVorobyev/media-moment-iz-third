@@ -4,7 +4,6 @@ import tempfile
 from PIL.Image import Image
 from gradio_client import Client, handle_file
 
-
 from inference.qwen_model.BaseQwenModel import BaseQwenModel
 
 

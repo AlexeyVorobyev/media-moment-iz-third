@@ -60,7 +60,7 @@ class YoloStacking:
             return [CropResultWithPrompt(
                 xyxy=crop_results[0].xyxy,
                 conf=crop_results[0].conf,
-            )]
+            ), CropResultWithPrompt()]
 
         results = []
         for crop_result in crop_results:
@@ -77,6 +77,7 @@ class YoloStacking:
         if len(results) == 0:
             return [CropResultWithPrompt()]
 
+        results.append(CropResultWithPrompt())
         return results
 
     def _get_sorted_crop_results(self, predictions: list[Results]) -> list[CropResult]:
