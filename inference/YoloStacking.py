@@ -92,7 +92,7 @@ class YoloStacking:
         crop_results = []
         for result in predictions:
             for box in result.boxes:
-                xyxy = box.xyxy[0].numpy()  # Координаты bbox (x1, y1, x2, y2)
+                xyxy = box.xyxy[0].cpu().numpy()  # Координаты bbox (x1, y1, x2, y2)
                 confidence = box.conf[0].item()  # Уверенность
                 crop_results.append(CropResult(conf=confidence, xyxy=xyxy))
 

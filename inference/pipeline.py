@@ -42,7 +42,7 @@ yolo_stacking = YoloStacking(
 )
 
 qwen_stacking = QwenStacking(
-    QwenApiModel()
+    Qwen2VLModel()
 )
 
 
