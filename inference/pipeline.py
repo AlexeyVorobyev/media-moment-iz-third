@@ -4,6 +4,7 @@ from PIL import Image, ImageOps, ImageEnhance
 
 from QwenStacking import QwenStacking
 from YoloStacking import YoloStacking
+from qwen_model.Qwen7VLModel import Qwen7VLModel
 from qwen_model.Qwen2VLModel import Qwen2VLModel
 
 YOLO_CROP_WEIGHTS_PATH = 'yolo_crop_model.pt'
@@ -153,6 +154,7 @@ yolo_stacking = YoloStacking(
 
 qwen_stacking = QwenStacking([
     Qwen2VLModel(),
+    Qwen7VLModel(),
 ])
 
 
