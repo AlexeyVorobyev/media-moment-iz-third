@@ -12,8 +12,9 @@ opencv-python = "^4.10.0.84"
 torch = "^2.5.1"
 torchvision = "^0.20.1"
 torchaudio = "^2.5.1"
-ultralytics = "==8.0.196"
 roboflow = "^1.1.50"
+ultralytics = "^8.3.49"
+gradio-client = "^1.5.2"
 
 
 [build-system]

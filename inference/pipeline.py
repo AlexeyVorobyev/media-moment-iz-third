@@ -1,14 +1,25 @@
 from PIL import Image, ImageOps
-from ultralytics import YOLO
-import numpy as np
 
+from QwenStacking import QwenStacking
+from YoloStacking import YoloStacking
+from inference.qwen_model.QwenApiModel import QwenApiModel
 
 YOLO_CROP_WEIGHTS_PATH = 'yolo_crop_model.pt'
 SHOW_PADDED_IMAGE = False
 SHOW_CROPPED_IMAGE = True if __name__ == '__main__' else False
 
 
-yolo_crop_model = YOLO(YOLO_CROP_WEIGHTS_PATH)  # Загрузка модели
+# yolo_crop_model = YOLO(YOLO_CROP_WEIGHTS_PATH)  # Загрузка модели
+
+yolo_stacking = YoloStacking(
+    [
+        YOLO_CROP_WEIGHTS_PATH
+    ]
+)
+
+qwen_stacking = QwenStacking(
+    QwenApiModel()
+)
 
 
 def pipeline(img_path: str) -> str:
@@ -29,28 +40,16 @@ def pipeline(img_path: str) -> str:
     '''
     Шаг 3. Получение области с номером с помощью YOLO
     '''
-    yolo_result = yolo_crop_model.predict(img, verbose=False)[0]  # Проход изображения через YOLO и получение объекта результата
-    boxes = yolo_result.boxes  # Получение ограничивающих рамок
-    confs = boxes.conf.cpu().detach().numpy()  # Массив степеней уверенности для каждой рамки
-    if len(confs) == 0:  # Если нет рамок (ничего не распознано)
-        return ''  # Возвращаем пустую строку в качестве результата
-    xyxy = boxes.xyxy.cpu().detach().numpy()  # Координаты каждой рамки
-    index_best = np.where(confs == max(confs))[0][0]  # Получение индекса наиболее вероятного расположения искомой области
-    xyxy_best = xyxy[index_best]  # Получение координат
+    yolo_results = yolo_stacking.predict(img)
 
     '''
-    Шаг 4. Вырезание области с номером
+    Шаг 4. Вырезание области с номером (происходит внутри класса QwenStacking)
     '''
-    img_crop = img.crop(xyxy_best)
-    if SHOW_CROPPED_IMAGE:
-        img_crop.show()
     
     '''
     Шаг 5. Отправка запроса с обрезанным изображением мультимодальной языковой модели и получение ответа
     '''
-    result = ''  # Заглушка
-    # TODO: ДОБАВИТЬ РАБОТУ С LLM
-    # Сначала проверить предобученную модель. Может, дообучать и не придётся.
+    result = qwen_stacking.predict_by_yolo_results(img, yolo_results)
 
     '''
     Шаг 6. Возврат полученной результирующей строки
