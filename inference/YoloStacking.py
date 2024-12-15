@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, Any
 
 import numpy as np
 from PIL import ImageFile
@@ -30,17 +30,20 @@ class CropResultWithPrompt:
 
 class YoloStacking:
 
-    def __init__(self, models_path_list: list[str]):
-        self.models_path_list = models_path_list
-        self.models = [YOLO(path) for path in models_path_list]
+    def __init__(self, models_list: list[dict[str, Any]]):
+        self.models_path_list = models_list
+        self.models = [{"model": YOLO(model["model_path"]), "preprocess_func": model["preprocess_func"]} for model in models_list]
         logger.debug(f"Инициализировано {len(self.models)} моделей")
 
     def predict(self, img: ImageFile) -> list[CropResultWithPrompt]:
         results = []
         logger.debug("Начата обработка изображения с помощью YoLo...")
         for model in self.models:
-            yolo_result = model.predict(img, verbose=False)
+            yolo_model = model["model"]
+            preprocessed_img = model["preprocess_func"](img)
+            yolo_result = yolo_model.predict(preprocessed_img, verbose=False)
             results += self._process_prediction(yolo_result)
+        results.append(CropResultWithPrompt())
         logger.debug(f"Результаты обработки YoloStacking: {str(results)}")
         return results
 
@@ -54,13 +57,13 @@ class YoloStacking:
         crop_results = self._get_sorted_crop_results(predict_result)
 
         if len(crop_results) == 0:
-            return [CropResultWithPrompt()]
+            return []
 
         if len(crop_results) == 1:
             return [CropResultWithPrompt(
                 xyxy=crop_results[0].xyxy,
                 conf=crop_results[0].conf,
-            ), CropResultWithPrompt()]
+            )]
 
         results = []
         for crop_result in crop_results:
@@ -75,9 +78,8 @@ class YoloStacking:
             )
 
         if len(results) == 0:
-            return [CropResultWithPrompt()]
+            return []
 
-        results.append(CropResultWithPrompt())
         return results
 
     def _get_sorted_crop_results(self, predictions: list[Results]) -> list[CropResult]:

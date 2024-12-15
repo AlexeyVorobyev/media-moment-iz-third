@@ -15,6 +15,9 @@ torchaudio = "^2.5.1"
 roboflow = "^1.1.50"
 ultralytics = "^8.3.49"
 gradio-client = "^1.5.2"
+transformers = "^4.47.0"
+qwen-vl-utils = "^0.0.8"
+accelerate = "^1.2.1"
 
 
 [build-system]

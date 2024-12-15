@@ -1,8 +1,9 @@
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, ImageEnhance
 
 from QwenStacking import QwenStacking
 from YoloStacking import YoloStacking
 from inference.qwen_model.QwenApiModel import QwenApiModel
+from qwen_model.Qwen2VLModel import Qwen2VLModel
 
 YOLO_CROP_WEIGHTS_PATH = 'yolo_crop_model.pt'
 SHOW_PADDED_IMAGE = False
@@ -11,10 +12,33 @@ SHOW_CROPPED_IMAGE = True if __name__ == '__main__' else False
 
 # yolo_crop_model = YOLO(YOLO_CROP_WEIGHTS_PATH)  # Загрузка модели
 
+def default_preprocess_func(img):
+    return img
+
+def gray_and_contrast_preprocess_func(image: Image.Image):
+    """
+    Перевод в чб и добавление контрастности
+    :param image:
+    :return:
+    """
+    bw_image = image.convert('L')
+
+    enhancer = ImageEnhance.Contrast(bw_image)
+    enhanced_image = enhancer.enhance(2.0)
+    return enhanced_image
+
+
 yolo_stacking = YoloStacking(
     [
-        YOLO_CROP_WEIGHTS_PATH
-    ]
+        {
+            "model_path": YOLO_CROP_WEIGHTS_PATH,
+            "preprocess_func": default_preprocess_func
+        },
+        {
+            "model_path": "yolo_models/atpt_1_best.pt",
+            "preprocess_func": gray_and_contrast_preprocess_func
+        }
+    ],
 )
 
 qwen_stacking = QwenStacking(
@@ -45,7 +69,7 @@ def pipeline(img_path: str) -> str:
     '''
     Шаг 4. Вырезание области с номером (происходит внутри класса QwenStacking)
     '''
-    
+
     '''
     Шаг 5. Отправка запроса с обрезанным изображением мультимодальной языковой модели и получение ответа
     '''
