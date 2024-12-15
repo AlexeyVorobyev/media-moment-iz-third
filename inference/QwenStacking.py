@@ -61,7 +61,12 @@ class QwenStacking:
         self._model = model
         self._cropping_func = default_crop if cropping_func is None else cropping_func
 
-    def predict_by_yolo_results(self, img: Image, yolo_results: list[CropResultWithPrompt]) -> str:
+    def predict_by_yolo_results(
+            self,
+            img: Image,
+            yolo_results: list[CropResultWithPrompt],
+            prompt_factory_list: list[Callable[[str], list[dict]]]
+    ) -> str:
         """
         Найти номер поезда по результатам обработки из стекинга йолы
         :param img: Фото
@@ -72,9 +77,11 @@ class QwenStacking:
         first_results = []
         for yolo_result in yolo_results:
             cropped = self._cropping_func(img, yolo_result.xyxy)
-            predict_result = self._model.predict(cropped, yolo_result.prompt)
-            logger.debug(f"Результат предсказания для {yolo_result}: {predict_result}")
-            first_results.append(predict_result)
+
+            for prompt_factory in prompt_factory_list:
+                predict_result = self._model.predict(cropped, prompt_factory)
+                logger.debug(f"Результат предсказания для {yolo_result}, prompt_factory - {prompt_factory.__name__}: {predict_result}")
+                first_results.append(predict_result)
 
         return self.filter_results(first_results)
 

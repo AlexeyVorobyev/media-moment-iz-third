@@ -20,8 +20,6 @@ class CropResult:
 
 @dataclass
 class CropResultWithPrompt:
-    prompt: str = "Here is a photo of the carriage, you need to write down the number of this carriage, the number always consists of 8 digits"
-    """Prompt для LLM"""
     conf: Optional[float] = None
     """Уверенность"""
     xyxy: Optional[np.ndarray] = None
