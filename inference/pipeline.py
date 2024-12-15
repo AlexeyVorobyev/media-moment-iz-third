@@ -141,11 +141,7 @@ prompt_factory_list = [
 ]
 
 main_preprocessing_list = [
-    default_preprocess,
-    enhance_contrast_and_sharp_pillow,
-    adaptive_thresholding,
-    enhance_sharpness_cv2,
-    gray_contrast
+    default_preprocess
 ]
 
 yolo_stacking = YoloStacking(
