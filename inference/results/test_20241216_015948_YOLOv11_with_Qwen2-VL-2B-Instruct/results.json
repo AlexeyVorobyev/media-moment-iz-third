@@ -1,0 +1,41 @@
+{
+  "test_name": "YOLOv11_with_Qwen2-VL-7B-Instruct",
+  "test_folder": "/home/lexxv/programming/media-moment-iz-third/inference/test",
+  "elapsed_seconds": 591.345,
+  "stats": {
+    "total": 55,
+    "equal": {
+      "count": 53,
+      "percent": 96.4
+    },
+    "partial": {
+      "count": 1,
+      "percent": 1.8
+    },
+    "wrong": {
+      "count": 1,
+      "percent": 1.8
+    },
+    "none": {
+      "count": 0,
+      "percent": 0.0
+    }
+  },
+  "failed_lists": {
+    "partial_images": [
+      {
+        "img": "test/52276631.jpg",
+        "ground_truth": "52276631",
+        "model_answer": "52276831"
+      }
+    ],
+    "wrong_images": [
+      {
+        "img": "test/53386785.jpg",
+        "ground_truth": "53386785",
+        "model_answer": "50000740"
+      }
+    ],
+    "not_recognized_images": []
+  }
+}
